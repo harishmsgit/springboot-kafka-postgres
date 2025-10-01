@@ -98,6 +98,7 @@ plan-order-service-v1-6876487474-xz7jd   1/1     Running   0          45m
 plan-stock-service-v1-6b9c98c484-4c58v   1/1     Running   0          21m
 postgres-77f8bdf45-qlshd                 1/1     Running   0          47m
 ```
+```text
 kubectl get deployments
 kubectl get service
 kubectl get svc
