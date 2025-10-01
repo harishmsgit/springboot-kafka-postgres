@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plan-order-service-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plan-order-service
+  template:
+    metadata:
+      labels:
+        app: plan-order-service
+    spec:
+      containers:
+        - name: plan-order-service
+          image: harsen/plan-order-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/order-service
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password

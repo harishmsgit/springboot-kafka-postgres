@@ -1,0 +1,5 @@
+project\demo\plan_stock_service\kafkaConsumer\Order.class
+project\demo\plan_stock_service\PlanStockServiceApplication.class
+project\demo\plan_stock_service\kafkaConsumer\OrderConsumer.class
+project\demo\plan_stock_service\kafkaConsumer\OrderEvent.class
+project\demo\plan_stock_service\kafkaConsumer\StockRepository.class
