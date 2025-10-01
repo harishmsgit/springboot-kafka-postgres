@@ -1,73 +1,111 @@
-Install docker
-install kubectl
+# Spring Boot + Kafka + Postgres + Kubernetes Setup Guide
 
-Start Docker desktop
+## Prerequisites
 
+- Install [Docker](https://www.docker.com/get-started)
+- Install [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- Start Docker Desktop
+
+## Minikube Setup
+
+```sh
 minikube start
 minikube status
+```
 
+To use Docker inside Minikube:
+
+```sh
 minikube docker-env
 eval $(minikube -p minikube docker-env)
+```
 
-If Docker Hub used:
-**************************
-##Build in locally, tag to docker hub and then push to docker hub:
+---
+
+## Working with Docker Hub
+
+### Build Locally, Tag, and Push to Docker Hub
+
+```sh
 docker build -t plan-order-service:latest .
 docker images
-docker tag plan-order-service:latest harsen/plan-order-service:latest .
+docker tag plan-order-service:latest harsen/plan-order-service:latest
 docker push harsen/plan-order-service:latest
+```
 
-##Build in docker hub directly and then just push:
+### Build and Push Directly to Docker Hub
+
+```sh
 docker build -t harsen/plan-order-service:latest .
 docker push harsen/plan-order-service:latest
+```
 
-##pull images from docker hub:
+### Pull Images from Docker Hub
+
+```sh
 docker pull harsen/plan-stock-service:latest
+```
+
+---
+
+## Kubernetes Deployment
+
+### Common Commands
+
+```sh
 kubectl get events --sort-by='.lastTimestamp'
+kubectl get pods
+kubectl get deployments
+kubectl get service
+kubectl get svc
+kubectl logs <pod-name>
+kubectl describe svc <service-name>
+minikube service <service-name>
+minikube ip
+minikube dashboard
+```
 
+### Deploy plan-order-service
 
-##plan-order-service:
+```sh
 kubectl apply -f postgres-pvc.yaml
 kubectl apply -f postgres-service.yaml
 kubectl apply -f postgres-deployment.yaml
 kubectl apply -f plan-order-service-deployment.yaml
 kubectl apply -f plan-order-service-service.yaml
+```
 
-##plan-stock-service:
+### Deploy plan-stock-service
+
+```sh
 kubectl apply -f postgres-pvc.yaml
 kubectl apply -f postgres-service.yaml
 kubectl apply -f postgres-deployment.yaml
 kubectl apply -f plan-stock-service-deployment.yaml
 kubectl apply -f plan-stock-service-service.yaml
+```
 
+> **Note:** Both services use Postgres.
 
-NOTE: Here both services using postgres 
+---
 
+## Example Output
 
+```text
 $ kubectl get pods
 NAME                                     READY   STATUS    RESTARTS   AGE
 plan-order-service-v1-6876487474-xz7jd   1/1     Running   0          45m
 plan-stock-service-v1-6b9c98c484-4c58v   1/1     Running   0          21m
 postgres-77f8bdf45-qlshd                 1/1     Running   0          47m
+```
 
+---
 
-kubectl get deployments
-kubectl get service
-kubectl get svc
-kubectl logs plan-order-service-v1-6876487474-xz7jd
-kubectl describe svc plan-order-service
-minikube service kubectl describe svc plan-order-service
-minikube ip
-minikube dashboard
+## Git Setup
 
+### Create a New Repository
 
-
-If Docker used:
-
-
-
-
-…or create a new repository on the command line
+```sh
 echo "# springboot-kafka-postgres" >> README.md
 git init
 git add README.md
@@ -75,8 +113,14 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/harishmsgit/springboot-kafka-postgres.git
 git push -u origin main
+```
 
-…or push an existing repository from the command line
+### Push an Existing Repository
+
+```sh
 git remote add origin https://github.com/harishmsgit/springboot-kafka-postgres.git
 git branch -M main
 git push -u origin main
+```
+
+---
